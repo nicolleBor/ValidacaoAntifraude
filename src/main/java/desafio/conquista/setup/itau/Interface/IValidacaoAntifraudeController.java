@@ -1,7 +1,5 @@
 package desafio.conquista.setup.itau.Interface;
 
-import desafio.conquista.setup.itau.models.Cliente;
-
 public interface IValidacaoAntifraudeController {
     boolean validaCpf(String cpf);
     boolean validaNomeCompleto(String nomeCompleto);
