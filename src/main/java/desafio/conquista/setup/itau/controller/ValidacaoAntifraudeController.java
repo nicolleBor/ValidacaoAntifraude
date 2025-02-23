@@ -1,14 +1,19 @@
 package desafio.conquista.setup.itau.controller;
 
+import desafio.conquista.setup.itau.models.Cliente;
+import desafio.conquista.setup.itau.models.Endereco;
+import desafio.conquista.setup.itau.service.IntegracaoAPI;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class ValidacaoAntifraudeController {
 
-    private static final String NOME_REGEX = "^[A-ZÀ-Ÿ][a-zà-ÿ]+( [A-ZÀ-Ÿ][a-zà-ÿ]+)+$";
+    private static final String NOME_REGEX = "^[A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*(?: (?:da|de|do|dos|das|de la|de las) [A-ZÀ-Ÿ][a-zà-ÿ]+| [A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*)+$";
     private static final Pattern PATTERN_NOME = Pattern.compile(NOME_REGEX);
     private static final String TELEFONE_REGEX = "^(\\+\\d{1,3}\\s?)?(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
     private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
@@ -27,46 +32,48 @@ public class ValidacaoAntifraudeController {
 
     public boolean validaCpf(String cpf) {
 
-        char digito10, digito11;
+        String digito10, digito11;
         int soma, resultado, numero, peso;
 
         if ((cpf.length() != 11) || getCpfsInvalidos().contains(cpf)){
+            System.out.println("cpf: " + false);
             return false;
         }
 
-        //Cálculo do primeiro dígito verificador
         soma = 0;
         peso = 10;
         for(int i=0; i<9; i++){
-            numero = (int)(cpf.charAt(i) - 48);
+            numero = Integer.parseInt(cpf.substring(i, i+1));
             soma = soma + (numero * peso);
             peso = peso - 1;
         }
 
         resultado = 11 - (soma % 11);
         if((resultado == 10) || (resultado == 11)){
-            digito10 = 0;
+            digito10 = String.valueOf(0);
         } else {
-            digito10 = (char)(resultado + 48);
+            digito10 = String.valueOf(resultado);
         }
 
         soma = 0;
         peso = 11;
         for(int i=0; i<10; i++){
-            numero = (int)(cpf.charAt(i) - 48);
+            numero = Integer.parseInt(cpf.substring(i,i+1));
             soma = soma + (numero * peso);
             peso = peso - 1;
         }
         resultado = 11 - (soma % 11);
         if((resultado == 10) || (resultado == 11)){
-            digito11 = 0;
+            digito11 = String.valueOf(0);
         } else {
-            digito11 = (char)(resultado + 48);
+            digito11 = String.valueOf(resultado);
         }
 
-        if((digito10 == cpf.charAt(9)) && (digito11 == cpf.charAt(10))){
+        if(digito10.equals(cpf.substring(9,10)) && digito11.equals(cpf.substring(10,11))){
+            System.out.println("cpf: " + true);
             return true;
         } else {
+            System.out.println("cpf: " + false);
             return false;
         }
 
@@ -74,31 +81,42 @@ public class ValidacaoAntifraudeController {
 
     public boolean validaNomeCompleto(String nomeCompleto){
         if(nomeCompleto == null || nomeCompleto.trim().isEmpty()){
+            System.out.println("nome completo: " + false);
             return false;
         }
-        return PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
+        boolean retorno = PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
+        System.out.println("nome completo: " + retorno);
+        return retorno;
     }
 
     public boolean validaTelefone(String telefone){
         if(telefone == null || telefone.trim().isEmpty()){
+            System.out.println("telefone: " + false);
             return false;
         }
-        return PATTERN_TELEFONE.matcher(telefone.trim()).matches();
+        boolean retorno = PATTERN_TELEFONE.matcher(telefone.trim()).matches();
+        System.out.println("telefone: " + retorno);
+        return retorno;
     }
 
     public boolean validaEmail(String email){
         if(email == null || email.trim().isEmpty()){
+            System.out.println("email: " + false);
             return false;
         }
-        return PATTERN_EMAIL.matcher(email.trim()).matches();
+        boolean retorno = PATTERN_EMAIL.matcher(email.trim()).matches();
+        System.out.println("email: " + retorno);
+        return retorno;
     }
 
     public boolean validaDataNascimento(String dataNascimento){
         if(dataNascimento == null || dataNascimento.trim().isEmpty()) {
+            System.out.println("data de nascimento: " + false);
             return false;
         }
 
         if(!PATTERN_DATA.matcher(dataNascimento).matches()) {
+            System.out.println("data de nascimento: " + false);
             return false;
         }
 
@@ -108,15 +126,43 @@ public class ValidacaoAntifraudeController {
             LocalDate hoje = LocalDate.now();
 
             if(data.getYear() < 1900 || data.isAfter(hoje)) {
+                System.out.println("data de nascimento: " + false);
                 return false;
             }
-
+            System.out.println("data de nascimento: " + true);
             return true;
         } catch(DateTimeParseException e){
+            System.out.println("data de nascimento: " + false);
             return false;
         }
     }
 
+    public boolean validaEndereco(String cep) throws Exception {
+        Endereco endereco = IntegracaoAPI.buscaCep(cep);
+        boolean retorno = endereco != null;
+        System.out.println("Endereço: " + retorno);
+        return retorno;
+    }
 
+    public boolean validaNomeMae(String nomeMae){
+        if(nomeMae == null || nomeMae.trim().isEmpty()){
+            System.out.println("nome da mae: " + false);
+            return false;
+        }
+        boolean retorno = PATTERN_NOME.matcher(nomeMae.trim()).matches();
+        System.out.println("nome da mae: " + retorno);
+        return retorno;
+    }
 
+    public int validacaoAntifraude(Cliente cliente) throws Exception {
+        int nota;
+        Random random = new Random();
+        if(validaCpf(cliente.getCpf()) && validaNomeCompleto(cliente.getNomeCompleto()) && validaTelefone(cliente.getTelefone()) && validaEmail(cliente.getEmail()) && validaDataNascimento(cliente.getDataNascimento()) && validaEndereco(cliente.getCep()) && validaNomeMae(cliente.getNomeMae()) == true) {
+            nota = random.nextInt(11);
+        } else {
+            nota = 0;
+        }
+        return nota;
+    }
 }
+
