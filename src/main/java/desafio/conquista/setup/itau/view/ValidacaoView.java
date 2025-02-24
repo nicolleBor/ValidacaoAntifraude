@@ -33,21 +33,16 @@ public class ValidacaoView extends JFrame{
     private JPanel Validacao;
     private JButton ValidarButton;
     private JButton VoltarButton;
+    private JFrame frame;
 
     private ValidacaoAntifraudeController validacaoAntifraudeController = new ValidacaoAntifraudeController();
 
     public ValidacaoView(JFrame frame) {
-        addActionListeners(frame);
-
+        this.frame = frame;
+        addActionListeners();
     }
 
-    public JPanel getMainPanel() {
-        return Validacao;
-    }
-
-
-
-    public void addActionListeners(JFrame frame){
+    public void addActionListeners(){
 
         ValidarButton.addActionListener(e -> {
             Cliente cliente = new Cliente();
@@ -88,8 +83,23 @@ public class ValidacaoView extends JFrame{
             }
         });
 
+        VoltarButton.addActionListener(e -> voltarParaIniciar());
 
-
+        LimparButton.addActionListener(e -> {
+            InsereNomeCompleto.setText("");
+            InsereCPF.setText("");
+            InsereTelefone.setText("");
+            InsereNomeMae.setText("");
+            InsereEmail.setText("");
+            InsereDataNascimento.setText("");
+            InsereCEP.setText("");
+            InsereNumero.setText("");
+            InsereComplemento.setText("");
+            CapturaLogradouro.setText("");
+            CapturaCidade.setText("");
+            CapturaBairro.setText("");
+            CapturaUF.setText("");
+        });
 
     }
 
@@ -98,7 +108,6 @@ public class ValidacaoView extends JFrame{
             @Override
             protected Void doInBackground() {
                 try {
-                    // Aqui você chama seu serviço que busca o CEP
                     Endereco endereco = IntegracaoAPI.buscaCep(cep);
 
                     if (endereco != null) {
@@ -113,7 +122,15 @@ public class ValidacaoView extends JFrame{
                 return null;
             }
         };
-        worker.execute(); // Executa a busca de forma assíncrona
+        worker.execute();
+    }
+
+    private void voltarParaIniciar(){
+        IniciarView iniciar = new IniciarView(frame);
+        frame.setContentPane(iniciar.getMainPanel());
+        frame.revalidate();
+        frame.repaint();
+        frame.pack();
     }
 
     private void createUIComponents(){
@@ -139,6 +156,10 @@ public class ValidacaoView extends JFrame{
         }
 
 
+    }
+
+    public JPanel getMainPanel(){
+        return Validacao;
     }
 
 

@@ -153,6 +153,7 @@
               <foreground color="-10989987"/>
               <horizontalAlignment value="0"/>
               <text value=""/>
+              <toolTipText value="Para números fixos, colocar 0 no primeiro dígito."/>
             </properties>
           </component>
           <component id="a2233" class="javax.swing.JLabel">
@@ -258,6 +259,7 @@
               <horizontalAlignment value="0"/>
               <selectedTextColor color="-10989987"/>
               <text value=""/>
+              <toolTipText value="Informe o CEP para o preenchimento automático do campo."/>
             </properties>
           </component>
           <component id="5fe97" class="javax.swing.JLabel">
@@ -287,6 +289,7 @@
               <foreground color="-10989987"/>
               <horizontalAlignment value="0"/>
               <text value=""/>
+              <toolTipText value=""/>
             </properties>
           </component>
           <component id="84ddf" class="javax.swing.JLabel">
@@ -349,6 +352,7 @@
               <selectedTextColor color="-10989987"/>
               <selectionColor color="-13745298"/>
               <text value=""/>
+              <toolTipText value="Informe o CEP para o preenchimento automático do campo."/>
             </properties>
           </component>
           <component id="67e87" class="javax.swing.JLabel">
@@ -378,6 +382,7 @@
               <horizontalAlignment value="0"/>
               <selectedTextColor color="-10989987"/>
               <text value=""/>
+              <toolTipText value="Informe o CEP para o preenchimento automático do campo."/>
             </properties>
           </component>
           <component id="f524e" class="javax.swing.JLabel">
@@ -407,6 +412,7 @@
               <horizontalAlignment value="0"/>
               <selectedTextColor color="-10989987"/>
               <text value=""/>
+              <toolTipText value="Informe o CEP para o preenchimento automático do campo."/>
             </properties>
           </component>
         </children>
