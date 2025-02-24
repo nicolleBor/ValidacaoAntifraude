@@ -317,6 +317,7 @@
               <foreground color="-10989987"/>
               <horizontalAlignment value="0"/>
               <text value=""/>
+              <toolTipText value="Caso não tenha complemento, coloque &quot;N/A&quot;"/>
             </properties>
           </component>
           <component id="110c8" class="javax.swing.JLabel">

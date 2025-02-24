@@ -85,22 +85,28 @@ public class ValidacaoView extends JFrame{
 
         VoltarButton.addActionListener(e -> voltarParaIniciar());
 
-        LimparButton.addActionListener(e -> {
-            InsereNomeCompleto.setText("");
-            InsereCPF.setText("");
-            InsereTelefone.setText("");
-            InsereNomeMae.setText("");
-            InsereEmail.setText("");
-            InsereDataNascimento.setText("");
-            InsereCEP.setText("");
-            InsereNumero.setText("");
-            InsereComplemento.setText("");
-            CapturaLogradouro.setText("");
-            CapturaCidade.setText("");
-            CapturaBairro.setText("");
-            CapturaUF.setText("");
-        });
+        LimparButton.addActionListener(e -> limparCampos());
 
+    }
+
+    private void limparCampos(){
+        InsereNomeCompleto.setText("");
+        InsereCPF.setValue(null);
+        InsereCPF.setText("");
+        InsereTelefone.setValue(null);
+        InsereTelefone.setText("");
+        InsereNomeMae.setText("");
+        InsereEmail.setText("");
+        InsereDataNascimento.setValue(null);
+        InsereDataNascimento.setText("");
+        InsereCEP.setValue(null);
+        InsereCEP.setText("");
+        InsereNumero.setText("");
+        InsereComplemento.setText("");
+        CapturaLogradouro.setText("");
+        CapturaCidade.setText("");
+        CapturaBairro.setText("");
+        CapturaUF.setText("");
     }
 
     private void preencherEndereco(String cep) {

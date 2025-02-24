@@ -9,20 +9,6 @@ public class Cliente {
     private Endereco endereco;
     private String nomeMae;
 
-    public Cliente(String cpf, String nomeCompleto, String telefone, String email, String dataNascimento, Endereco endereco, String nomeMae){
-        this.cpf = cpf;
-        this.nomeCompleto = nomeCompleto;
-        this.telefone = telefone;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
-        this.nomeMae = nomeMae;
-    }
-
-    public Cliente(String cpf) {
-        this.cpf = cpf;
-    }
-
     public Cliente() {
     }
 
