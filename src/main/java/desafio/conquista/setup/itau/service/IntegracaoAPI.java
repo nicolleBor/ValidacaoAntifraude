@@ -10,7 +10,7 @@ import java.net.URL;
 import com.google.gson.Gson;
 
 public class IntegracaoAPI {
-    public static Endereco buscaCep (String cep) throws Exception{
+    public static Endereco buscaCep(String cep) throws Exception{
         String enderecoURL = "https://viacep.com.br/ws/" + cep + "/json/";
         URL url = new URL(enderecoURL);
         HttpURLConnection conexao = (HttpURLConnection) url.openConnection();

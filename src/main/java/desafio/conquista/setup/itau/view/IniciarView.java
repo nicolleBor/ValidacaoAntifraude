@@ -1,26 +1,40 @@
 package desafio.conquista.setup.itau.view;
 
-
-
 import javax.swing.*;
 
-public class IniciarView {
-    private JPanel topPanel;
-    private JLabel titleLabel;
+public class IniciarView extends JFrame{
+    private JPanel Rodape;
+    private JLabel Cabecalho;
     private JPanel Painel;
+    private JButton IniciarButton;
+    private JButton SairButton;
 
-    private JButton iniciarButton;
+    public IniciarView(JFrame frame) {
+        addActionListeners(frame);
+    }
+
+    public void addActionListeners(JFrame frame){
+        IniciarButton.addActionListener(e -> {
+            JFrame frame2 = new JFrame();
+            frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            ValidacaoView menu = new ValidacaoView(frame2);
+            frame2.setContentPane(menu.getMainPanel());
+            frame2.setSize(700, 550);
+            frame2.setResizable(false);
+            frame2.setLocationRelativeTo(null);
+            frame2.setVisible(true);
+        });
 
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Tela Inicial");
+    }
 
-        IniciarView iniciar = new IniciarView();
-        frame.setContentPane(iniciar.Painel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+    private void createUIComponents(){
+
+    }
+
+    public JPanel getMainPanel() {
+        return Painel;
     }
 
 }

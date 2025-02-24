@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="desafio.conquista.setup.itau.view.IniciarView">
-  <grid id="27dc6" binding="Painel" custom-create="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="Painel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="307" height="146"/>
+      <xy x="20" y="20" width="347" height="146"/>
     </constraints>
     <properties>
-      <background color="-40448"/>
+      <background color="-1977648"/>
       <font name="Ubuntu Condensed" size="25" style="1"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="8358" class="javax.swing.JLabel" binding="Cabecalho" custom-create="true">
+      <component id="8358" class="javax.swing.JLabel" binding="Cabecalho">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="283" height="27"/>
           </grid>
         </constraints>
         <properties>
           <font name="Ubuntu Condensed" size="25" style="1"/>
+          <foreground color="-40448"/>
           <text value="Motor Validador Antifraude"/>
         </properties>
       </component>
-      <grid id="c9363" binding="Rodape" custom-create="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="c9363" binding="Rodape" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="266" height="10"/>
           </grid>
         </constraints>
@@ -33,18 +34,48 @@
         </properties>
         <border type="empty" title-justification="2" title-position="2"/>
         <children>
-          <component id="a5ea5" class="javax.swing.JButton" binding="iniciarButton" custom-create="true">
+          <component id="f27f4" class="javax.swing.JButton" binding="IniciarButton">
             <constraints/>
             <properties>
-              <background color="-1977648"/>
-              <font name="Ubuntu Condensed"/>
-              <foreground color="-1977648"/>
+              <background color="-10989987"/>
+              <font name="Ubuntu Light" size="16" style="1"/>
+              <hideActionText value="true"/>
               <horizontalTextPosition value="0"/>
               <text value="Iniciar"/>
             </properties>
           </component>
+          <component id="babcf" class="javax.swing.JButton" binding="SairButton">
+            <constraints/>
+            <properties>
+              <background color="-10989987"/>
+              <font name="Ubuntu Light" size="16" style="1"/>
+              <hideActionText value="true"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Sair"/>
+            </properties>
+          </component>
         </children>
       </grid>
+      <hspacer id="871fb">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="28379">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="e33cc">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="2237">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

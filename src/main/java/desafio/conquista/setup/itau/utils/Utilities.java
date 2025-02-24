@@ -11,4 +11,11 @@ public class Utilities {
         }
         return jsonString;
     }
+
+    public static String limpaCaractere(String input) {
+        if (input == null) {
+            return null;
+        }
+        return input.replaceAll("[^a-zA-Z0-9]", "");
+    }
 }

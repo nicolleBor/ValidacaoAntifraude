@@ -6,16 +6,16 @@ public class Cliente {
     private String telefone;
     private String email;
     private String dataNascimento;
-    private String cep;
+    private Endereco endereco;
     private String nomeMae;
 
-    public Cliente(String cpf, String nomeCompleto, String telefone, String email, String dataNascimento, String cep, String nomeMae){
+    public Cliente(String cpf, String nomeCompleto, String telefone, String email, String dataNascimento, Endereco endereco, String nomeMae){
         this.cpf = cpf;
         this.nomeCompleto = nomeCompleto;
         this.telefone = telefone;
         this.email = email;
         this.dataNascimento = dataNascimento;
-        this.cep = cep;
+        this.endereco = endereco;
         this.nomeMae = nomeMae;
     }
 
@@ -66,12 +66,12 @@ public class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getCep(){
-        return cep;
+    public Endereco getEndereco(){
+        return endereco;
     }
 
-    public void setCep(String cep){
-        this.cep = cep;
+    public void setEndereco(Endereco endereco){
+        this.endereco = endereco;
     }
 
     public String getNomeMae(){

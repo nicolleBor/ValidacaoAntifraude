@@ -3,6 +3,7 @@ package desafio.conquista.setup.itau.controller;
 import desafio.conquista.setup.itau.models.Cliente;
 import desafio.conquista.setup.itau.models.Endereco;
 import desafio.conquista.setup.itau.service.IntegracaoAPI;
+import desafio.conquista.setup.itau.utils.Utilities;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,8 @@ import java.util.regex.Pattern;
 
 public class ValidacaoAntifraudeController {
 
-    private static final String NOME_REGEX = "^[A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*(?: (?:da|de|do|dos|das|de la|de las) [A-ZÀ-Ÿ][a-zà-ÿ]+| [A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*)+$";
+    private static final String NOME_REGEX = "^[A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*(?: (?:da|de|do|dos|das|de la|de las)" +
+            " [A-ZÀ-Ÿ][a-zà-ÿ]+| [A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*)+$";
     private static final Pattern PATTERN_NOME = Pattern.compile(NOME_REGEX);
     private static final String TELEFONE_REGEX = "^(\\+\\d{1,3}\\s?)?(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
     private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
@@ -27,10 +29,14 @@ public class ValidacaoAntifraudeController {
     }
 
     public List<String> getCpfsInvalidos(){
-        return List.of("00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999");
+        return List.of("00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555",
+                "66666666666", "77777777777", "88888888888", "99999999999");
     }
 
     public boolean validaCpf(String cpf) {
+        if(Utilities.limpaCaractere(cpf) == null){
+            return false;
+        }
 
         String digito10, digito11;
         int soma, resultado, numero, peso;
@@ -90,7 +96,7 @@ public class ValidacaoAntifraudeController {
     }
 
     public boolean validaTelefone(String telefone){
-        if(telefone == null || telefone.trim().isEmpty()){
+        if(Utilities.limpaCaractere(telefone) == null || telefone.trim().isEmpty()){
             System.out.println("telefone: " + false);
             return false;
         }
@@ -110,7 +116,7 @@ public class ValidacaoAntifraudeController {
     }
 
     public boolean validaDataNascimento(String dataNascimento){
-        if(dataNascimento == null || dataNascimento.trim().isEmpty()) {
+        if(Utilities.limpaCaractere(dataNascimento) == null || dataNascimento.trim().isEmpty()) {
             System.out.println("data de nascimento: " + false);
             return false;
         }
@@ -137,9 +143,20 @@ public class ValidacaoAntifraudeController {
         }
     }
 
-    public boolean validaEndereco(String cep) throws Exception {
-        Endereco endereco = IntegracaoAPI.buscaCep(cep);
-        boolean retorno = endereco != null;
+    public boolean validaEndereco(Endereco endereco) throws Exception {
+        Endereco enderecoApi = IntegracaoAPI.buscaCep(endereco.getCep());
+
+        if(Utilities.limpaCaractere(endereco.getCep()) == null){
+            return false;
+        }
+
+        boolean retorno = enderecoApi != null;
+
+        if (endereco.getLogradouro().isEmpty() || endereco.getBairro().isEmpty() || endereco.getLocalidade().isEmpty()
+            || endereco.getUf().isEmpty() || endereco.getComplemento().isEmpty() || endereco.getUnidade().isEmpty()){
+            retorno = false;
+        }
+
         System.out.println("Endereço: " + retorno);
         return retorno;
     }
@@ -157,7 +174,9 @@ public class ValidacaoAntifraudeController {
     public int validacaoAntifraude(Cliente cliente) throws Exception {
         int nota;
         Random random = new Random();
-        if(validaCpf(cliente.getCpf()) && validaNomeCompleto(cliente.getNomeCompleto()) && validaTelefone(cliente.getTelefone()) && validaEmail(cliente.getEmail()) && validaDataNascimento(cliente.getDataNascimento()) && validaEndereco(cliente.getCep()) && validaNomeMae(cliente.getNomeMae()) == true) {
+        if(validaCpf(cliente.getCpf()) && validaNomeCompleto(cliente.getNomeCompleto()) && validaTelefone(cliente.getTelefone())
+                && validaEmail(cliente.getEmail()) && validaDataNascimento(cliente.getDataNascimento())
+                && validaEndereco(cliente.getEndereco()) && validaNomeMae(cliente.getNomeMae())) {
             nota = random.nextInt(11);
         } else {
             nota = 0;

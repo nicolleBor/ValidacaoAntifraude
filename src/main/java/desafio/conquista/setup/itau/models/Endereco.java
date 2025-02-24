@@ -9,6 +9,9 @@ public class Endereco {
     private String unidade;
     private String complemento;
 
+    public Endereco() {
+    }
+
     public Endereco(String cep, String logradouro, String bairro, String localidade, String uf){
         this.cep = cep;
         this.logradouro = logradouro;
