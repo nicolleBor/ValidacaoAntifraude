@@ -2,7 +2,6 @@ package desafio.conquista.setup.itau.controller;
 
 import desafio.conquista.setup.itau.models.Cliente;
 import desafio.conquista.setup.itau.models.Endereco;
-import desafio.conquista.setup.itau.service.IntegracaoAPI;
 import desafio.conquista.setup.itau.utils.Utilities;
 
 import java.time.LocalDate;
@@ -144,7 +143,7 @@ public class ValidacaoAntifraudeController {
     }
 
     public boolean validaEndereco(Endereco endereco) throws Exception {
-        Endereco enderecoApi = IntegracaoAPI.buscaCep(endereco.getCep());
+        Endereco enderecoApi = IntegracaoAPIController.buscaCep(endereco.getCep());
 
         if(Utilities.limpaCaractere(endereco.getCep()) == null){
             return false;

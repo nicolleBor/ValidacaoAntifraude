@@ -3,7 +3,7 @@ package desafio.conquista.setup.itau.view;
 import desafio.conquista.setup.itau.controller.ValidacaoAntifraudeController;
 import desafio.conquista.setup.itau.models.Cliente;
 import desafio.conquista.setup.itau.models.Endereco;
-import desafio.conquista.setup.itau.service.IntegracaoAPI;
+import desafio.conquista.setup.itau.controller.IntegracaoAPIController;
 import desafio.conquista.setup.itau.utils.Utilities;
 
 import javax.swing.*;
@@ -114,7 +114,7 @@ public class ValidacaoView extends JFrame{
             @Override
             protected Void doInBackground() {
                 try {
-                    Endereco endereco = IntegracaoAPI.buscaCep(cep);
+                    Endereco endereco = IntegracaoAPIController.buscaCep(cep);
 
                     if (endereco != null) {
                         CapturaLogradouro.setText(endereco.getLogradouro());

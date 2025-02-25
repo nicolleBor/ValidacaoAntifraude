@@ -1,4 +1,4 @@
-package desafio.conquista.setup.itau.service;
+package desafio.conquista.setup.itau.controller;
 
 import desafio.conquista.setup.itau.models.Endereco;
 import desafio.conquista.setup.itau.utils.Utilities;
@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
 
-public class IntegracaoAPI {
+public class IntegracaoAPIController {
     public static Endereco buscaCep(String cep) throws Exception{
         String enderecoURL = "https://viacep.com.br/ws/" + cep + "/json/";
         URL url = new URL(enderecoURL);
