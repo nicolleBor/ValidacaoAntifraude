@@ -13,13 +13,33 @@ import java.util.regex.Pattern;
 
 public class ValidacaoAntifraudeController {
 
+
+    // Expressão para validação de estrutura de Nome Completo
+    // - Começa com letra maiúscula, seguida de letras minúsculas (com suporte a acentos).
+    // - Permite sobrenomes separados por espaços ou hífens.
+    // - Aceita partículas como "da", "de", "do", "dos", "das", "de la", "de las".
     private static final String NOME_REGEX = "^[A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*(?: (?:da|de|do|dos|das|de la|de las)" +
             " [A-ZÀ-Ÿ][a-zà-ÿ]+| [A-ZÀ-Ÿ][a-zà-ÿ]+(?:[- ][A-ZÀ-Ÿ][a-zà-ÿ]+)*)+$";
     private static final Pattern PATTERN_NOME = Pattern.compile(NOME_REGEX);
-    private static final String TELEFONE_REGEX = "^(\\+\\d{1,3}\\s?)?(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
+
+    // Expressão para validação números de telefone
+    // - Aceita parênteses para DDD opcional ((XX)).
+    // - Suporta números com 4 ou 5 dígitos na primeira parte e 4 na segunda (ex: 9999-9999 ou 99999-9999).
+    private static final String TELEFONE_REGEX = "^(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
     private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
+
+    // Expressão para validação de e-mails
+    // - Aceita letras, números e caracteres especiais antes do "@"
+    // - Domínio pode conter letras, números e pontos
+    // - Extensão deve ter pelo menos 2 caracteres (ex: .com, .br, .org)
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final Pattern PATTERN_EMAIL = Pattern.compile(EMAIL_REGEX);
+
+
+    // Expressão para validaçãp de datas no formato DD/MM/AAAA
+    // - Dia: 01 a 31
+    // - Mês: 01 a 12
+    // - Ano: Qualquer sequência de 4 dígitos
     private static final String DATA_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
     private static final Pattern PATTERN_DATA = Pattern.compile(DATA_REGEX);
 
@@ -41,10 +61,10 @@ public class ValidacaoAntifraudeController {
         int soma, resultado, numero, peso;
 
         if ((cpf.length() != 11) || getCpfsInvalidos().contains(cpf)){
-            System.out.println("cpf: " + false);
             return false;
         }
 
+        //Cálculo do dígito 10 do CPF.
         soma = 0;
         peso = 10;
         for(int i=0; i<9; i++){
@@ -60,6 +80,7 @@ public class ValidacaoAntifraudeController {
             digito10 = String.valueOf(resultado);
         }
 
+        //Cálculo do dígito 11 do CPF.
         soma = 0;
         peso = 11;
         for(int i=0; i<10; i++){
@@ -74,11 +95,10 @@ public class ValidacaoAntifraudeController {
             digito11 = String.valueOf(resultado);
         }
 
+        //Confere se dígitos calculados batem com os digitados na entrada.
         if(digito10.equals(cpf.substring(9,10)) && digito11.equals(cpf.substring(10,11))){
-            System.out.println("cpf: " + true);
             return true;
         } else {
-            System.out.println("cpf: " + false);
             return false;
         }
 
@@ -86,42 +106,31 @@ public class ValidacaoAntifraudeController {
 
     public boolean validaNomeCompleto(String nomeCompleto){
         if(nomeCompleto == null || nomeCompleto.trim().isEmpty()){
-            System.out.println("nome completo: " + false);
             return false;
         }
-        boolean retorno = PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
-        System.out.println("nome completo: " + retorno);
-        return retorno;
+        return PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
     }
 
     public boolean validaTelefone(String telefone){
         if(Utilities.limpaCaractere(telefone) == null || telefone.trim().isEmpty()){
-            System.out.println("telefone: " + false);
             return false;
         }
-        boolean retorno = PATTERN_TELEFONE.matcher(telefone.trim()).matches();
-        System.out.println("telefone: " + retorno);
-        return retorno;
+        return PATTERN_TELEFONE.matcher(telefone.trim()).matches();
     }
 
     public boolean validaEmail(String email){
         if(email == null || email.trim().isEmpty()){
-            System.out.println("email: " + false);
             return false;
         }
-        boolean retorno = PATTERN_EMAIL.matcher(email.trim()).matches();
-        System.out.println("email: " + retorno);
-        return retorno;
+        return PATTERN_EMAIL.matcher(email.trim()).matches();
     }
 
     public boolean validaDataNascimento(String dataNascimento){
         if(Utilities.limpaCaractere(dataNascimento) == null || dataNascimento.trim().isEmpty()) {
-            System.out.println("data de nascimento: " + false);
             return false;
         }
 
         if(!PATTERN_DATA.matcher(dataNascimento).matches()) {
-            System.out.println("data de nascimento: " + false);
             return false;
         }
 
@@ -131,13 +140,10 @@ public class ValidacaoAntifraudeController {
             LocalDate hoje = LocalDate.now();
 
             if(data.getYear() < 1900 || data.isAfter(hoje)) {
-                System.out.println("data de nascimento: " + false);
                 return false;
             }
-            System.out.println("data de nascimento: " + true);
             return true;
         } catch(DateTimeParseException e){
-            System.out.println("data de nascimento: " + false);
             return false;
         }
     }
@@ -156,18 +162,14 @@ public class ValidacaoAntifraudeController {
             retorno = false;
         }
 
-        System.out.println("Endereço: " + retorno);
         return retorno;
     }
 
     public boolean validaNomeMae(String nomeMae){
         if(nomeMae == null || nomeMae.trim().isEmpty()){
-            System.out.println("nome da mae: " + false);
             return false;
         }
-        boolean retorno = PATTERN_NOME.matcher(nomeMae.trim()).matches();
-        System.out.println("nome da mae: " + retorno);
-        return retorno;
+        return PATTERN_NOME.matcher(nomeMae.trim()).matches();
     }
 
     public int validacaoAntifraude(Cliente cliente) throws Exception {

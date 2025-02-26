@@ -44,38 +44,11 @@ public class ValidacaoView extends JFrame{
 
     public void addActionListeners(){
 
-        ValidarButton.addActionListener(e -> {
-            Cliente cliente = new Cliente();
-            Endereco endereco = new Endereco();
-
-            cliente.setCpf(Utilities.limpaCaractere(InsereCPF.getText()));
-            cliente.setNomeCompleto(InsereNomeCompleto.getText());
-            cliente.setEmail(InsereEmail.getText());
-            cliente.setTelefone(InsereTelefone.getText());
-            cliente.setNomeMae(InsereNomeMae.getText());
-            cliente.setDataNascimento(InsereDataNascimento.getText());
-
-            endereco.setCep(InsereCEP.getText());
-            endereco.setBairro(CapturaBairro.getText());
-            endereco.setLogradouro(CapturaLogradouro.getText());
-            endereco.setUnidade(InsereNumero.getText());
-            endereco.setComplemento(InsereComplemento.getText());
-            endereco.setLocalidade(CapturaCidade.getText());
-            endereco.setUf(CapturaUF.getText());
-            cliente.setEndereco(endereco);
-
-            try {
-               int nota = validacaoAntifraudeController.validacaoAntifraude(cliente);
-                JOptionPane.showMessageDialog(frame, "GRAU DE CONFIABILIDADE: " + nota);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-
-        });
+        ValidarButton.addActionListener(e -> validaDados());
 
         InsereCEP.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                String cep = InsereCEP.getText().replaceAll("[^0-9]", ""); // Remove caracteres não numéricos
+                String cep = InsereCEP.getText().replaceAll("[^0-9]", "");
 
                 if (cep.length() == 8) {
                     preencherEndereco(cep);
@@ -87,6 +60,34 @@ public class ValidacaoView extends JFrame{
 
         LimparButton.addActionListener(e -> limparCampos());
 
+    }
+
+    private void validaDados(){
+        Cliente cliente = new Cliente();
+        Endereco endereco = new Endereco();
+
+        cliente.setCpf(Utilities.limpaCaractere(InsereCPF.getText()));
+        cliente.setNomeCompleto(InsereNomeCompleto.getText());
+        cliente.setEmail(InsereEmail.getText());
+        cliente.setTelefone(InsereTelefone.getText());
+        cliente.setNomeMae(InsereNomeMae.getText());
+        cliente.setDataNascimento(InsereDataNascimento.getText());
+
+        endereco.setCep(InsereCEP.getText());
+        endereco.setBairro(CapturaBairro.getText());
+        endereco.setLogradouro(CapturaLogradouro.getText());
+        endereco.setUnidade(InsereNumero.getText());
+        endereco.setComplemento(InsereComplemento.getText());
+        endereco.setLocalidade(CapturaCidade.getText());
+        endereco.setUf(CapturaUF.getText());
+        cliente.setEndereco(endereco);
+
+        try {
+            int nota = validacaoAntifraudeController.validacaoAntifraude(cliente);
+            JOptionPane.showMessageDialog(frame, "GRAU DE CONFIABILIDADE: " + nota);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void limparCampos(){
