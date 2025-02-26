@@ -21,14 +21,15 @@
 
 :small_blue_diamond: [Estrutura de Classes](#estrutura-de-classes)
 
-:small_blue_diamond: [Licença](#licença)
-
 :small_blue_diamond: [Contato](#contato)
+
+:small_blue_diamond: [Licença](#licença)
 
 
 ## Descrição do Projeto
 
 O projeto *Motor de Validação Antifraude* é um protótipo desenvolvido em aplicação Java com o objetivo de gerar um grau de confiabilidade de um determinado cliente à partir de dados requeridos. Caso seja identificada alguma inconsistência nos dados fornecidos e/ou informações faltantes, o grau de confiabilidade será zero; caso não, gerará uma nota aleatória entre zero e dez. 
+
 Ele utiliza uma interface gráfica com JFrame e integra-se a uma API de consulta de CEP para verificar endereços.
 
 ## Estrutura do Projeto
@@ -70,7 +71,7 @@ src/
 - *Java 8 ou superior:* [Download do JDK](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - *Maven 3.6.0 ou superior:* [Download do Maven](https://maven.apache.org/download.cgi)
 
-## Como Executar :arrow_forward:
+## Como Executar
 
 1. *Clonar o Repositório:*
 
@@ -101,9 +102,14 @@ src/
 
 - *Utilities.java:* Classe utilitária com métodos auxiliares, como conversão de JSON e limpeza de caracteres especiais.
 
-## Licença
-
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Contato
 
+| [<img src="https://avatars.githubusercontent.com/u/155683365?s=400&u=18f0d539c431028608d0b599db0753f81a95f282&v=4" width=115><br><sub>Nicolle Borges</sub>](https://github.com/nicolleBor) |  
+| :---: 
+
+## Licença
+
+The [MIT License]() (MIT)
+
+Copyright :copyright: 2025 - Validação Antifraude
