@@ -21,7 +21,7 @@
 
 :small_blue_diamond: [Estrutura de Classes](#estrutura-de-classes)
 
-:small_blue_diamond: [Contato](#contato)
+:small_blue_diamond: [Desenvolvedores](#desenvolvedores)
 
 :small_blue_diamond: [Licença](#licença)
 
@@ -103,13 +103,13 @@ src/
 - *Utilities.java:* Classe utilitária com métodos auxiliares, como conversão de JSON e limpeza de caracteres especiais.
 
 
-## Contato
+## Desenvolvedores
 
 | [<img src="https://avatars.githubusercontent.com/u/155683365?s=400&u=18f0d539c431028608d0b599db0753f81a95f282&v=4" width=115><br><sub>Nicolle Borges</sub>](https://github.com/nicolleBor) |  
 | :---: 
 
 ## Licença
 
-The [MIT License]() (MIT)
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 Copyright :copyright: 2025 - Validação Antifraude
