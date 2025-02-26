@@ -47,11 +47,19 @@ public class ValidacaoAntifraudeController {
         super();
     }
 
+
+    //Lista de CPFs inválidos que geram exceção no cálculo de validação.
     public List<String> getCpfsInvalidos(){
         return List.of("00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555",
                 "66666666666", "77777777777", "88888888888", "99999999999");
     }
 
+
+    /**
+     * Valida um CPF utilizando cálculo disponibilizado pelo Ministério da Fazenda
+     * @param cpf O CPF a ser validado
+     * @return true se o CPF existir, false caso o contrário.
+     */
     public boolean validaCpf(String cpf) {
         if(Utilities.limpaCaractere(cpf) == null){
             return false;
@@ -104,12 +112,24 @@ public class ValidacaoAntifraudeController {
 
     }
 
-    public boolean validaNomeCompleto(String nomeCompleto){
-        if(nomeCompleto == null || nomeCompleto.trim().isEmpty()){
+    /**
+     * Valida estrutura esperada de um nome completo utilizando regex.
+     * @param nomeCompleto O nome a ser validado.
+     * @return true se o nome completo possuir Nome e Sobrenome, false caso o contrário.
+     */
+
+    public boolean validaNomeCompleto(String nomeCompleto, String nomeMae){
+        if(nomeCompleto == null || nomeCompleto.trim().isEmpty() || nomeCompleto == nomeMae){
             return false;
         }
         return PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
     }
+
+    /**
+     * Valida se um telefone possui a estrutura devida utilizando regex.
+     * @param telefone O telefone a ser validado.
+     * @return true se o telefone cumprir com a estrutura devida, false caso o contrário.
+     */
 
     public boolean validaTelefone(String telefone){
         if(Utilities.limpaCaractere(telefone) == null || telefone.trim().isEmpty()){
@@ -118,12 +138,25 @@ public class ValidacaoAntifraudeController {
         return PATTERN_TELEFONE.matcher(telefone.trim()).matches();
     }
 
+    /**
+     * Valida um endereço de e-mail utilizando regex.
+     * @param email O e-mail a ser validado.
+     * @return true se o e-mail for válido, false caso o contrário.
+     */
+
     public boolean validaEmail(String email){
         if(email == null || email.trim().isEmpty()){
             return false;
         }
         return PATTERN_EMAIL.matcher(email.trim()).matches();
     }
+
+    /**
+     * Valida se a data digitada possui o formato dd/MM/yyyy utilizando regex, além de averiguar se a data de nascimento
+     * aplicada é coerente conforme data atual.
+     * @param dataNascimento A data de nascimento a ser validada.
+     * @return true se a data de nascimento for válida, false caso o contrário.
+     */
 
     public boolean validaDataNascimento(String dataNascimento){
         if(Utilities.limpaCaractere(dataNascimento) == null || dataNascimento.trim().isEmpty()) {
@@ -148,6 +181,14 @@ public class ValidacaoAntifraudeController {
         }
     }
 
+    /**
+     * Consome API viaCEP para captar endereço conforme CEP fornecido, validando na sequência se todos os dados
+     * requetidos foram preenchidos.
+     * @param endereco O endereço a ser validado.
+     * @return true caso esteja válido, false caso contrário.
+     * @throws Exception Se houver falha na conexão com a API ViaCEP
+     */
+
     public boolean validaEndereco(Endereco endereco) throws Exception {
         Endereco enderecoApi = IntegracaoAPIController.buscaCep(endereco.getCep());
 
@@ -165,19 +206,33 @@ public class ValidacaoAntifraudeController {
         return retorno;
     }
 
-    public boolean validaNomeMae(String nomeMae){
-        if(nomeMae == null || nomeMae.trim().isEmpty()){
+    /**
+     * Valida se Nome da Mãe possui estrutura de nome completo utilizando regex.
+     * @param nomeMae O nome da mãe a ser validado.
+     * @return true caso esteja válido, false caso contrário.
+     */
+
+    public boolean validaNomeMae(String nomeMae, String nomeCompleto){
+        if(nomeMae == null || nomeMae.trim().isEmpty() || nomeMae == nomeCompleto){
             return false;
         }
         return PATTERN_NOME.matcher(nomeMae.trim()).matches();
     }
 
+    /**
+     * Realiza apuração do grau de confiabilidade do cliente conforme dados validados anteriormente.
+     * @param cliente O objeto principal da análise.
+     * @return nota randômica entre 0 a 10 caso todas as validações retornem true, nota 0 caso exista algum false dentre
+     * as validações.
+     * @throws Exception
+     */
+
     public int validacaoAntifraude(Cliente cliente) throws Exception {
         int nota;
         Random random = new Random();
-        if(validaCpf(cliente.getCpf()) && validaNomeCompleto(cliente.getNomeCompleto()) && validaTelefone(cliente.getTelefone())
+        if(validaCpf(cliente.getCpf()) && validaNomeCompleto(cliente.getNomeCompleto(), cliente.getNomeMae()) && validaTelefone(cliente.getTelefone())
                 && validaEmail(cliente.getEmail()) && validaDataNascimento(cliente.getDataNascimento())
-                && validaEndereco(cliente.getEndereco()) && validaNomeMae(cliente.getNomeMae())) {
+                && validaEndereco(cliente.getEndereco()) && validaNomeMae(cliente.getNomeMae(), cliente.getNomeCompleto())) {
             nota = random.nextInt(11);
         } else {
             nota = 0;
