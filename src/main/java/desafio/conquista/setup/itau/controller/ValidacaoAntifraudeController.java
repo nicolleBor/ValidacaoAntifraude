@@ -25,7 +25,7 @@ public class ValidacaoAntifraudeController {
     // Expressão para validação números de telefone
     // - Aceita parênteses para DDD opcional ((XX)).
     // - Suporta números com 4 ou 5 dígitos na primeira parte e 4 na segunda (ex: 9999-9999 ou 99999-9999).
-    private static final String TELEFONE_REGEX = "^(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
+    private static final String TELEFONE_REGEX = "^(\\+\\d{1,3}\\s?)?(\\(?\\d{2}\\)?\\s?)?\\d{4,5}-?\\d{4}$";
     private static final Pattern PATTERN_TELEFONE = Pattern.compile(TELEFONE_REGEX);
 
     // Expressão para validação de e-mails
@@ -37,10 +37,12 @@ public class ValidacaoAntifraudeController {
 
 
     // Expressão para validaçãp de datas no formato DD/MM/AAAA
-    // - Dia: 01 a 31
-    // - Mês: 01 a 12
-    // - Ano: Qualquer sequência de 4 dígitos
-    private static final String DATA_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+    private static final String DATA_REGEX = "^(?:"
+            + "(0[1-9]|1\\d|2[0-8])/(0[1-9]|1[0-2])/\\d{4}"  // Dias 01-28 para qualquer mês
+            + "|29/02/(?:(?:19|20)(?:04|08|[2468][048]|[13579][26])|2000)"  // 29/02 apenas em anos bissextos
+            + "|30/(0[13-9]|1[0-2])/\\d{4}"  // Dia 30 permitido para meses que têm 30 ou 31 dias
+            + "|31/(0[13578]|1[02])/\\d{4}"  // Dia 31 permitido apenas para meses com 31 dias
+            + ")$";
     private static final Pattern PATTERN_DATA = Pattern.compile(DATA_REGEX);
 
     public ValidacaoAntifraudeController(){
@@ -61,7 +63,8 @@ public class ValidacaoAntifraudeController {
      * @return true se o CPF existir, false caso o contrário.
      */
     public boolean validaCpf(String cpf) {
-        if(Utilities.limpaCaractere(cpf) == null){
+        cpf = Utilities.limpaCaractere(cpf);
+        if(cpf == null){
             return false;
         }
 
@@ -125,16 +128,32 @@ public class ValidacaoAntifraudeController {
         return PATTERN_NOME.matcher(nomeCompleto.trim()).matches();
     }
 
+
+
+    public List<String> getDDDsValidos(){
+        return List.of("11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "24", "27", "28",
+                "31", "32", "33", "34", "35", "37", "38", "41", "42", "43", "44", "45", "46", "47", "48", "49", "51",
+                "53", "54", "55", "61", "62", "64", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77", "79",
+                "81", "82", "83", "84", "85", "86", "87", "88", "89", "91", "92", "93", "94", "95", "96", "97", "98", "99");
+    }
+
     /**
      * Valida se um telefone possui a estrutura devida utilizando regex.
      * @param telefone O telefone a ser validado.
      * @return true se o telefone cumprir com a estrutura devida, false caso o contrário.
      */
-
     public boolean validaTelefone(String telefone){
+
+        String ddd = telefone.substring(1,3);
+
         if(Utilities.limpaCaractere(telefone) == null || telefone.trim().isEmpty()){
             return false;
         }
+
+        if(!getDDDsValidos().contains(ddd)){
+            return false;
+        }
+
         return PATTERN_TELEFONE.matcher(telefone.trim()).matches();
     }
 

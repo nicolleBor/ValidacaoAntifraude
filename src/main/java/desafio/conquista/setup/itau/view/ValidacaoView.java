@@ -3,11 +3,10 @@ package desafio.conquista.setup.itau.view;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import desafio.conquista.setup.itau.controller.IntegracaoAPIController;
 import desafio.conquista.setup.itau.controller.ValidacaoAntifraudeController;
 import desafio.conquista.setup.itau.models.Cliente;
 import desafio.conquista.setup.itau.models.Endereco;
-import desafio.conquista.setup.itau.controller.IntegracaoAPIController;
-import desafio.conquista.setup.itau.utils.Utilities;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -74,7 +73,7 @@ public class ValidacaoView extends JFrame {
         Cliente cliente = new Cliente();
         Endereco endereco = new Endereco();
 
-        cliente.setCpf(Utilities.limpaCaractere(InsereCPF.getText()));
+        cliente.setCpf((InsereCPF.getText()));
         cliente.setNomeCompleto(InsereNomeCompleto.getText());
         cliente.setEmail(InsereEmail.getText());
         cliente.setTelefone(InsereTelefone.getText());
@@ -146,6 +145,7 @@ public class ValidacaoView extends JFrame {
         frame.revalidate();
         frame.repaint();
         frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     private void createUIComponents() {

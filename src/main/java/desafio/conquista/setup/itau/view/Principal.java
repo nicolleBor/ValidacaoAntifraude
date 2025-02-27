@@ -11,6 +11,7 @@ public class Principal {
         IniciarView menu = new IniciarView(frame);
         frame.setContentPane(menu.getMainPanel());
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

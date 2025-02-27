@@ -36,6 +36,7 @@ public class IniciarView extends JFrame {
         frame.revalidate();
         frame.repaint();
         frame.setSize(700, 550);
+        frame.setLocationRelativeTo(null);
     }
 
     private void encerrarValidacao() {
