@@ -10,6 +10,15 @@ import java.net.URL;
 import com.google.gson.Gson;
 
 public class IntegracaoAPIController {
+
+    /**
+     * Realiza busca de dados de endereço por meio de consumo de API viaCEP.
+     * @param cep O CEP a ser consultado (apenas números, sem formatação).
+     * @return Um objeto {@code Endereco} contendo as informações do endereço correspondente ao CEP.
+     *      Retorna {@code null} se ocorrer algum erro na requisição ou na conversão do JSON.
+     * @throws Exception Se houver falha na conexão com a API ViaCEP
+     */
+
     public static Endereco buscaCep(String cep) throws Exception{
         String enderecoURL = "https://viacep.com.br/ws/" + cep + "/json/";
         URL url = new URL(enderecoURL);
