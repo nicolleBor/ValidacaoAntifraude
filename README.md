@@ -74,7 +74,7 @@ src/
 ```                                                                                                                                                         
 Os objetos do projeto são os seguintes:
 
-![Diagrama de Classes](https://photos.app.goo.gl/xQH3bvgdP6jjFTq28)
+![Diagrama de Classes](./diagrama-classes)
 
 ## Funcionalidades
 
