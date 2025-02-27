@@ -113,7 +113,7 @@ Os objetos do projeto são os seguintes:
 
 ## Testes
 
-O projeto possuem testes unitários para os métodos da *Controller* utilizando JUnit. Para executar os testes, rode:
+O projeto possui testes unitários para os métodos da *Controller* utilizando JUnit. Para executar os testes, rode:
 
 ```bash
 mvn test
